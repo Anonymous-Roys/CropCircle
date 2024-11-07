@@ -1,4 +1,4 @@
-Let’s dive into the frontend implementation! Given the refined workflow, we’ll need to build an intuitive and responsive interface that caters to **farmers**, **admins**, and **customers**. Each will have a distinct dashboard with specific functionalities, and the app should emphasize **product freshness**, **quality verification**, and **real-time notifications**.
+Let’s dive into the frontend implementation!!!! Given the refined workflow, we’ll need to build an intuitive and responsive interface that caters to **farmers**, **admins**, and **customers**. Each will have a distinct dashboard with specific functionalities, and the app should emphasize **product freshness**, **quality verification**, and **real-time notifications**.
 
 Here's how we can go about structuring the frontend for each role.
 
