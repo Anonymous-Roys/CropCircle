@@ -5,26 +5,26 @@ const AdminLogin = () => {
   const formData = {
     email: "",
     password: "",
-  }
-  
+  };
+
   const [error, setError] = React.useState("");
   const [form, setForm] = React.useState(formData);
-  const [emailError, setEmailError] = React.useState(""); 
+  const [emailError, setEmailError] = React.useState("");
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  function HandleChange(e){
-    setForm({...form,[e.target.name]:e.target.value})
-      if (!emailRegex.test(e.target.value)) {
-        setEmailError("Please Enter a valid email address");
-      }
-    
+  function HandleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    if (!emailRegex.test(e.target.value)) {
+      setEmailError("Please Enter a valid email address");
+    }
+
     console.log(form);
   }
 
-  function HandleSubmit(e){
+  function HandleSubmit(e) {
     e.preventDefault();
-    if(form.email === "" || form.password === ""){
-      alert("Please fill the form")
+    if (form.email === "" || form.password === "") {
+      alert("Please fill the form");
       return;
     }
     // try{
@@ -42,18 +42,24 @@ const AdminLogin = () => {
     // catch(error){
     //   setError(error);
     // }
-  
-    console.log("Results",form);
+    setForm(formData);
+    console.log("Results", form);
   }
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-cover"
       style={{ backgroundImage: `url(${AdminBg})` }}
     >
-      <div className="w-full max-w-lg p-20 bg-gray-300 rounded-lg shadow-lg">
-      <h1 className="mb-4 text-3xl font-bold text-center text-green-600">CROPCIRCLE</h1>
-      <h2 className="text-xl font-semibold text-center">Welcome Back, Admin</h2>
-      <p className="mb-6 text-center">Sign In to continue</p>
+
+      <div className="p-20 w-full max-w-lg bg-gray-300 rounded-lg shadow-lg">
+        <h1 className="font-bold text-3xl text-center text-green-600 mb-4">
+          CROPCIRCLE
+        </h1>
+        <h2 className="text-xl font-semibold text-center">
+          Welcome Back, Admin
+        </h2>
+        <p className="text-center mb-6">Sign In to continue</p>
+
 
         <form onSubmit={HandleSubmit} action="" className="space-y-4">
           <input
@@ -61,12 +67,18 @@ const AdminLogin = () => {
             placeholder="Email"
             name="email"
             onChange={HandleChange}
-            className="w-full p-3 border border-gray-400 rounded-md focus:outline-none focus:border-green-500"
+            value={form.email}
+            className="w-full p-3 rounded-md border border-gray-400 focus:outline-none focus:border-green-500"
+
           />
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-3 border border-gray-400 rounded-md focus:outline-none focus:border-green-500"
+            name="password"
+            onChange={HandleChange}
+            value={form.password}
+            className="w-full p-3 rounded-md border border-gray-400 focus:outline-none focus:border-green-500"
+
           />
           <button
             type="submit"
