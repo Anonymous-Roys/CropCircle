@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+AUTH_USER_MODEL = 'farmapp.User'  # Replace 'yourapp' with the actual name of your app
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'farmapp',
 ]
 
 MIDDLEWARE = [
@@ -75,12 +78,12 @@ WSGI_APPLICATION = 'farmsales.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'CropCircle',
-        'USER': 'backend_team',
-        'PASSWORD': 'Akogo660221.',
+        'USER': 'root',
+        'PASSWORD': '2005',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '3308',
     }
 }
 
