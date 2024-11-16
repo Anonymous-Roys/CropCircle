@@ -104,4 +104,4 @@ const FarmerLayout = ({ children }) => {
   );
 }
 
-export default FarmerLayout
+export default FarmerLayout;

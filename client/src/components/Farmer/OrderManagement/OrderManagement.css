@@ -29,7 +29,7 @@
 
 .filter-section select:focus,
 .filter-section input:focus {
-  border-color: #007bff;
+  border-color: rgb(22, 163, 74);
 }
 
 .order-header h2 {
@@ -51,7 +51,7 @@
 }
 
 .see-all-orders {
-  background-color: #007bff;
+  background-color: rgb(22, 163, 74);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -62,7 +62,7 @@
 }
 
 .see-all-orders:hover {
-  background-color: #0056b3;
+  background-color: rgb(17, 88, 43);
 }
 
 .order-list {
@@ -87,7 +87,7 @@
 
 .header-icon {
   font-size: 32px;
-  color: #007bff;
+  color: rgb(22, 163, 74);
   margin-right: 12px;
 }
 
@@ -146,7 +146,7 @@
 }
 
 .view-details {
-  background-color: #007bff;
+  background-color: rgb(22, 163, 74);
   color: white;
   border: none;
   padding: 6px;
@@ -158,7 +158,7 @@
 }
 
 .view-details:hover {
-  background-color: #0056b3;
+  background-color: rgb(10, 90, 31);
 }
 
 .modal-overlay {
@@ -216,7 +216,7 @@
 }
 
 .primary-button {
-  background-color: #007bff;
+  background-color: rgb(22, 163, 74);
   color: #fff;
   border: none;
   padding: 10px 20px;

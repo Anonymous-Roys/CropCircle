@@ -6,6 +6,10 @@ const AdminLogin = () => {
     email: "",
     password: "",
   };
+  const dummyData = {
+    email: "admin@admin.com",
+    password: "789",
+  };
 
   const [error, setError] = React.useState("");
   const [form, setForm] = React.useState(formData);
@@ -26,6 +30,15 @@ const AdminLogin = () => {
     if (form.email === "" || form.password === "") {
       alert("Please fill the form");
       return;
+    }
+    if (
+      form.email === dummyData.email &&
+      form.password === dummyData.password
+    ) {
+      window.location.href = "/admin/*";
+    } else {
+      alert("Wrong Credentials");
+      setForm(formData);
     }
     // try{
     //    const response = fetch("http://localhost:8000/api/admin/login", form)
@@ -50,7 +63,6 @@ const AdminLogin = () => {
       className="flex items-center justify-center min-h-screen bg-cover"
       style={{ backgroundImage: `url(${AdminBg})` }}
     >
-
       <div className="p-14 w-11/12 md:w-full max-w-lg bg-gray-300 opacity-90 rounded-3xl shadow-lg">
         <h1 className="font-bold text-3xl text-center text-green-600 mb-4">
           CROPCIRCLE
@@ -60,7 +72,6 @@ const AdminLogin = () => {
         </h2>
         <p className="text-center mb-6">Sign In to continue</p>
 
-
         <form onSubmit={HandleSubmit} action="" className="space-y-4">
           <input
             type="email"
@@ -69,7 +80,6 @@ const AdminLogin = () => {
             onChange={HandleChange}
             value={form.email}
             className="w-full p-3 rounded-md border border-gray-400 focus:outline-none focus:border-green-500"
-
           />
           <input
             type="password"
@@ -78,7 +88,6 @@ const AdminLogin = () => {
             onChange={HandleChange}
             value={form.password}
             className="w-full p-3 rounded-md border border-gray-400 focus:outline-none focus:border-green-500"
-
           />
           <button
             type="submit"

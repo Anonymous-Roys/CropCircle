@@ -32,6 +32,15 @@ const FarmerSignUp = () => {
       alert("Please fill the form");
       return;
     }
+    if (form.password === form.confirmPassword) {
+      setForm(formData);
+      navigate("/farmer/overview");
+      return;
+    }
+    else{
+      alert("Password doesn't match");
+      return;
+    }
     // try {
     //   //const response = await post("http://localhost:8000/api/farmer/signup", form);
     //   if (response.status === 200) {

@@ -1,0 +1,3 @@
+# Ignore the workspace folder
+workspace/
+__pycache__
