@@ -80,10 +80,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'CropCircle',
-        # 'USER': 'root',
-        # 'PASSWORD': '2005',
-        # 'HOST': 'localhost',
-        # 'PORT': '3308',
+        'USER': 'root',
+        'PASSWORD': '2005',
+        'HOST': 'localhost',
+        'PORT': '3308',
     }
 }
 

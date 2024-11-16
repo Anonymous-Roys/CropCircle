@@ -30,12 +30,10 @@ class ProductCreateUpdateSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
-    customerId = serializers.PrimaryKeyRelatedField(queryset=User.objects.filter(role='customer'))
-
     class Meta:
         model = Review
         fields = ['reviewId', 'product', 'customerId', 'rating', 'comment', 'createdAt', 'updatedAt']
+        read_only_fields = ['reviewId', 'createdAt', 'updatedAt']
 
     def validate_rating(self, value):
         if not (1 <= value <= 5):

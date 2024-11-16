@@ -5,46 +5,31 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.generics import UpdateAPIView
 from django.shortcuts import get_object_or_404
 from .models import Product, Review, User, Farmer
+from rest_framework.permissions import IsAuthenticated
 from .serializers import ReviewSerializer, ProductSerializer, ProductCreateUpdateSerializer
 
 
 class ProductReviewCreateView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, productId):
-        # Log the incoming data for debugging
-        print("Request Data:", request.data)
+        # Ensure the product exists
+        try:
+            product = Product.objects.get(productId=productId)
+        except Product.DoesNotExist:
+            return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        # Extract customerId, rating, and comment from the request data
-        customer_id = request.data.get('customerId')  # Adjust based on field name in payload
-        rating = request.data.get('rating')
-        comment = request.data.get('comment')
-        
-        # Validate required fields
-        if rating is None or comment is None or customer_id is None:
-            raise ValidationError("Missing required fields: rating, comment, or customerId.")
-        
-        # Validate rating range: 1-5
-        if not (1 <= int(rating) <= 5):
-            raise ValidationError("Rating must be between 1 and 5.")
+        # Prepare review data
+        review_data = request.data
+        review_data['product'] = productId  # Link the review to the product
+        review_data['customerId'] = request.user.userId  # Set the customer to the current user
 
-        # Fetch product and customer instance based on the passed IDs
-        product = get_object_or_404(Product, productId=productId)  # Corrected this line
-        customer = get_object_or_404(User, userId=customer_id, role='customer')  # customerId should match userId
-
-        # Prepare data for serialization (pass the customer and product references)
-        review_data = {
-            'product': product,  # Ensure 'product' field is passed as the actual product object
-            'customer': customer,  # Ensure 'customer' field is passed as the actual customer object
-            'rating': rating,
-            'comment': comment
-        }
-
-        # Use ReviewSerializer to handle review creation and validation
+        # Validate and save the review
         serializer = ReviewSerializer(data=review_data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"review": serializer.data}, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class FarmerProductsListView(APIView):
     def get(self, request, farmerId):
