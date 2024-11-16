@@ -28,10 +28,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<UnderDevelopment />} />
-        <Route path="/service" element={<UnderDevelopment />} />
-        <Route path="/contact" element={<UnderDevelopment />} />
-        <Route path="/privacy-policy" element={<PolicyAgreement />} />
+        <Route path="/about" element={<UnderDevelopment navURL={'/'}/>} />
+        <Route path="/service" element={<UnderDevelopment navURL={'/'}/>} />
+        <Route path="/contact" element={<UnderDevelopment navURL={'/'}/>} />
+        <Route path="/privacy-policy" element={<PolicyAgreement/>} />
 
 
         <Route path="/customer/login" element={<CustomerLogin />} />
@@ -51,6 +51,7 @@ function App() {
                 <Route path="product" element={<Products />} />
                 <Route path="orders" element={<Orders />} />
                 <Route path="overview" element={<Overview />} />
+                
               </Routes>
             </FarmerLayout>
           }
@@ -81,7 +82,7 @@ function App() {
                 <Route path="homepage" element={<Homepage />} />
                 <Route path="cartitems" element={<CartPage />} />
                 <Route path="orders" element={<OrderTracking />} />
-
+                <Route path="/profile" element={<UnderDevelopment navURL={'/customer/homepage'}/>} />
               </Routes>
             </CustomerLayout>
           }
