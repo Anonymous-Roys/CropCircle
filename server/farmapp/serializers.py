@@ -1,21 +1,38 @@
 from rest_framework import serializers
-from .models import Order, Product
+from django.contrib.auth.hashers import make_password
+from .models import User, Order, Product
 
+# User Management Serializers
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['name', 'email', 'password', 'role', 'phone', 'address']
+
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data['password'])
+        return super().create(validated_data)
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True)
+
+class ForgotPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+class ResetPasswordSerializer(serializers.Serializer):
+    token = serializers.CharField()
+    new_password = serializers.CharField(write_only=True)
+
+# Order Management Serializers
 class OrderDetailSerializer(serializers.ModelSerializer):
     """
     Serializer for displaying detailed information about an order.
-    
-    Fields:
-        - orderId: The unique ID of the order.
-        - customerName: Name of the customer who placed the order.
-        - productName: Name of the product in the order.
-        - quantity: Quantity of the product ordered.
-        - totalPrice: Total price of the order.
-        - orderStatus: Status of the order.
-        - dateOrdered: The date the order was placed.
-        - deliveryDate: The expected delivery date for the order.
-        - address: Address of the customer.
-        - phone: Contact phone number of the customer.
     """
     orderId = serializers.IntegerField()  # Removed 'source' argument
     customerName = serializers.CharField(source='customer.name')
@@ -31,7 +48,6 @@ class OrderDetailSerializer(serializers.ModelSerializer):
     def get_productName(self, obj):
         """
         Retrieves the name of the product from the Product model based on productId.
-        Assumes that each order item is structured to include 'productId' in orderItems.
         """
         product_ids = [item['productId'] for item in obj.orderItems]
         products = Product.objects.filter(productId__in=product_ids)
@@ -40,7 +56,6 @@ class OrderDetailSerializer(serializers.ModelSerializer):
     def get_quantity(self, obj):
         """
         Retrieves the quantity of the product ordered.
-        Assumes 'quantity' is part of each entry in orderItems.
         """
         return sum(item.get('quantity', 0) for item in obj.orderItems)
 
@@ -48,17 +63,10 @@ class OrderDetailSerializer(serializers.ModelSerializer):
         model = Order
         fields = ['orderId', 'customerName', 'productName', 'phone', 'orderItems', 'totalPrice', 'orderStatus', 'address', 'quantity', 'dateOrdered', 'deliveryDate']
 
-
-
-
 class OrderStatusUpdateSerializer(serializers.ModelSerializer):
     """
     Serializer for updating the status of an order.
-    
-    Fields:
-        - status: New status for the order, validated against allowed transitions.
     """
-
     status = serializers.ChoiceField(choices=Order.ORDER_STATUS_CHOICES)
 
     def validate_status(self, value):

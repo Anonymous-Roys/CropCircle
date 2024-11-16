@@ -1,9 +1,7 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.utils import timezone
+
 
 # 1. User Model
 class User(AbstractBaseUser):
@@ -17,12 +15,15 @@ class User(AbstractBaseUser):
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)  # Password field
+    password = models.CharField(max_length=255)  # Password field
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
     phone = models.CharField(max_length=15, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
-    last_login = models.DateTimeField(null=True, blank=True)  
+    reset_password_token = models.CharField(max_length=36, null=True, blank=True)  # UUID token
+    reset_token_created_at = models.DateTimeField(null=True, blank=True)  # Token timestamp
+    last_login = models.DateTimeField(null=True, blank=True)  # Last login timestamp
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
@@ -30,10 +31,10 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.name
 
+
     class Meta:
         db_table = 'User'
-        managed = True  # Set to True or remove to allow migrations
-
+        managed = True
 
 # 2. Farmer Model
 class Farmer(models.Model):
@@ -44,7 +45,6 @@ class Farmer(models.Model):
     ]
     
     farmerId = models.AutoField(primary_key=True)
-    # user = models.OneToOneField(User, on_delete=models.CASCADE, limit_choices_to={'role': 'farmer'})
     userId = models.OneToOneField(User, on_delete=models.CASCADE, limit_choices_to={'role': 'farmer'}, related_name='farmer', db_column='userId')
     farmName = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
@@ -59,7 +59,7 @@ class Farmer(models.Model):
     
     class Meta:
         db_table = 'Farmer'
-        managed = False
+        managed = True
 
 # 3. Product Model
 class Product(models.Model):
@@ -70,7 +70,6 @@ class Product(models.Model):
     ]
     
     productId = models.AutoField(primary_key=True)
-    # farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE)
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, db_column='farmerId')
     productName = models.CharField(max_length=255)
     description = models.TextField()
@@ -87,7 +86,7 @@ class Product(models.Model):
     
     class Meta:
         db_table = 'Product'
-        managed = False
+        managed = True
 
 # 4. Order Model
 class Order(models.Model):
@@ -99,7 +98,7 @@ class Order(models.Model):
     ]
     
     # orderId = models.AutoField(primary_key=True)
-    # customer = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'customer'})
+    # customer = models.ForeignKey(User, on_delete=models.CASCADE, db_column='customerId')
     orderId = models.AutoField(primary_key=True)  # Primary key field
     customer = models.ForeignKey(User, on_delete=models.CASCADE, db_column='customerId')  # ForeignKey to User model
     orderItems = models.JSONField()  # Store an array of products, including productId, quantity, and price
@@ -108,13 +107,14 @@ class Order(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
     deliveryDate = models.DateTimeField(null=True, blank=True) 
+    deliveryDate = models.DateTimeField(null=True, blank=True) 
 
     def __str__(self):
-        return self.orderId
+        return str(self.orderId)
     
     class Meta:
         db_table = 'Order'
-        managed = False
+        managed = True
 
 # 5. Cart Model (for Customers)
 class Cart(models.Model):
@@ -126,11 +126,11 @@ class Cart(models.Model):
     updatedAt = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.customer
+        return str(self.cartId)
     
     class Meta:
         db_table = 'Cart'
-        managed = False
+        managed = True
 
 # 6. Review Model
 class Review(models.Model):
@@ -143,11 +143,11 @@ class Review(models.Model):
     updatedAt = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.reviewId
+        return str(self.reviewId)
     
     class Meta:
         db_table = 'Review'
-        managed = False
+        managed = True
 
 # 7. Admin Activity Log Model
 class AdminActivityLog(models.Model):
@@ -162,4 +162,4 @@ class AdminActivityLog(models.Model):
     
     class Meta:
         db_table = 'AdminActivityLog'
-        managed = False
+        managed = True
