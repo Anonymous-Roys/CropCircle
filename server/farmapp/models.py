@@ -136,15 +136,15 @@ class Cart(models.Model):
 class Review(models.Model):
     reviewId = models.AutoField(primary_key=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    customer = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'customer'})
+    customerId = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'customer'})
     rating = models.IntegerField()
     comment = models.TextField(null=True, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.reviewId
-    
+        return f"Review {self.reviewId}"
+
     class Meta:
         db_table = 'Review'
         managed = False
@@ -163,3 +163,4 @@ class AdminActivityLog(models.Model):
     class Meta:
         db_table = 'AdminActivityLog'
         managed = False
+        
