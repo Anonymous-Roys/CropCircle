@@ -49,15 +49,11 @@ const FarmerLogin = () => {
   }
   return (
     <div
-      className="flex h-screen bg-auto bg-no-repeat bg-right"
+      className="flex justify-center items-center lg:justify-start h-screen bg-cover lg:bg-auto bg-no-repeat bg-right"
       style={{ backgroundImage: `url(${FarmerLoginBg})` }}
     >
       <div
-        className="flex flex-col items-center w-full md:w-1/2 bg-white p-8 md:p-16 border border-green-400 "
-        style={{
-          borderBottomRightRadius: "3.4rem",
-          borderTopRightRadius: "3.4rem",
-        }}
+        className="flex flex-col items-center justify-center w-10/12 md:w-3/4 lg:w-1/2 lg:h-lvh lg:p-24 bg-white opacity-90 p-8 pb-12 md:p-16 border border-green-400 rounded-3xl lg:rounded-tl-none lg:rounded-bl-none "
       >
         <h1 className="text-green-600 text-3xl font-bold">FARMER SIGN IN</h1>
         <h2 className="text-xl font-semibold mt-4">Welcome Back</h2>
@@ -81,7 +77,7 @@ const FarmerLogin = () => {
           />
           <button
             type="submit"
-            className="w-full bg-green-600 text-white p-3 rounded hover:bg-green-700"
+            className="w-full bg-green-600 text-white p-3 rounded-xl hover:bg-green-700"
           >
             Sign In
           </button>

@@ -49,22 +49,19 @@ const FarmerSignUp = () => {
 
   return (
     <div
-      className="flex justify-end h-screen bg-auto bg-no-repeat"
+      className="flex justify-center items-center lg:justify-end h-screen bg-cover lg:bg-auto bg-no-repeat"
       style={{
         backgroundImage: `url(${FamerLoginBg})`,
       }}
     >
       <div
-        className="flex flex-col items-center md:w-1/2 bg-white sm:p-10 md:p-16 border border-green-400 "
-        style={{
-          borderBottomLeftRadius: "3.4rem",
-          borderTopLeftRadius: "3.4rem",
-        }}
+        className="flex flex-col items-center justify-center w-5/6 md:w-3/4 lg:h-lvh rounded-3xl lg:rounded-tr-none lg:rounded-br-none
+         opacity-95 lg:w-1/2 bg-white p-10 md:p-8 md:px-20  border border-green-400 "
       >
         <h2 className="text-3xl font-bold sm:mt-9 text-green-700 mb-2">
           Farmer Sign Up
         </h2>
-        <h3 className="text-2xl font-semibold mb-4">Welcome to Crop Cicle</h3>
+        <h3 className="text-lg font-semibold mb-4">Welcome to CropCicle</h3>
         <p className="text-gray-500 mb-6">lorem ipsum</p>
         <form onSubmit={HandleSubmit} className="space-y-4" action="">
           <input
@@ -101,7 +98,7 @@ const FarmerSignUp = () => {
           />
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-4 rounded-md hover:bg-green-700"
+            className="w-full bg-green-600 text-white py-4 rounded-xl hover:bg-green-700"
           >
             Sign In
           </button>

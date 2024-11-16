@@ -51,7 +51,7 @@ const AdminLogin = () => {
       style={{ backgroundImage: `url(${AdminBg})` }}
     >
 
-      <div className="p-20 w-full max-w-lg bg-gray-300 rounded-lg shadow-lg">
+      <div className="p-14 w-11/12 md:w-full max-w-lg bg-gray-300 opacity-90 rounded-3xl shadow-lg">
         <h1 className="font-bold text-3xl text-center text-green-600 mb-4">
           CROPCIRCLE
         </h1>
@@ -82,7 +82,7 @@ const AdminLogin = () => {
           />
           <button
             type="submit"
-            className="w-full py-3 font-semibold text-white transition bg-green-600 rounded-md hover:bg-green-700"
+            className="w-full py-3 font-semibold text-white transition bg-green-600 rounded-xl hover:bg-green-700"
           >
             Sign In
           </button>
